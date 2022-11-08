@@ -87,3 +87,6 @@ time.sleep(1)
 print('Pense em um animal e não conte para ninguem')
 time.sleep(3)
 Main()
+
+
+#falta: tratar erros no {s/n}; documentar; 
