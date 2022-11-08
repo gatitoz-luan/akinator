@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 import arvore as tree
 import time
+import json
 
 class Main():
     def __init__(self):
-        self.init = tree.Arvore()
-        self.cursor = self.init.root
-        self.root_fixa = self.cursor
+        # Abrir o arquivo de dados
+        with open("dados.json") as file:
+            # Carregar seu conteúdo e torná-lo um novo dicionário
+            self.dados = json.load(file)
+        self.cursor = self.dados
+        self.root_fixa = self.dados
         self.cursor_history = []
-        if self.cursor['value'] == None:
-            self.cursor['value'] = 'cachorro'
-            self.cursor['tipo'] = 1
         self.move_cursor()
 
 
@@ -40,12 +41,12 @@ class Main():
             time.sleep(2)
             posicao = self.cursor
 
-            posicao.update({'left' : {'left' : {}, 'right': {}, 'value': bicho, 'tipo' : 1}, 'right': {'left' : {}, 'right': {}, 'value': animal, 'tipo' : 1}, 'value': diferenca, 'tipo' : 0})
+            posicao.update({"left" : {"left" : {}, "right": {}, "value": bicho, "tipo" : 1}, "right": {"left" : {}, "right": {}, "value": animal, "tipo" : 1}, "value": diferenca, "tipo" : 0})
             self.finaliza(0)
 
 
     def perguta(self,caracteristica):
-        resposta = input("O animal que você pensou "+caracteristica+'? [s/n]')
+        resposta = input("O animal que você pensou "+caracteristica+'? [s/n]  ')
         if resposta.lower() == 's':
             self.move_cursor(1)
         else:
@@ -60,16 +61,26 @@ class Main():
         else:
             print('Espero que você não tenha mentido!')
         time.sleep(1)
-        print('jogue novamente')
+        novamente = input('Deseja jogar novamente? [s/n]  ')
+        time.sleep(1)
+        if novamente.lower() == 's':
+            self.cursor =    self.root_fixa
+            self.cursor_history.clear()
+            self.move_cursor()
+        else:
+            with open("dados.json", 'w') as file:
+                time.sleep(1)
+                print('---------------SALVANDO DADOS-------------')
+                json.dump(self.dados, file, indent=4 )
+                time.sleep(1)
+                print('################ END GAME ##################')
 
-        self.cursor =    self.root_fixa
-        self.cursor_history.clear()
-        self.move_cursor()
+
 
 
 print('---------------BEM VINDO AO AKINATOR-------------')
 time.sleep(1)
-print('Aqui consigo advinhar o animal quevocê estiver pensando')
+print('Aqui consigo descobrir o animal que você estiver pensando')
 time.sleep(2)
 print('Bora lá!!!')
 time.sleep(1)
