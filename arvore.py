@@ -1,4 +1,4 @@
-
+####### A árvore usada para armazenar os dados é uma estrutura de chave:valor onde os valores podem ser strings ou conjuntos de chaves:valores
 class Arvore():
     def __init__(self):
         self.root =  {  'left' : {},
@@ -6,7 +6,7 @@ class Arvore():
                         'value' : None,
                         'tipo' : None   }
 
-
+#metodo para criação de novas folhas na árvore, usando o endereço por meio do histórico de passos
 
     def set_node_leaf(self, valor, history):
         posicao = self.root
